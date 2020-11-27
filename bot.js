@@ -1,21 +1,48 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
+require('dotenv').config();
+let fs = require('fs');
+let _ = require('lodash');
+let Discord = require('discord.js');
+let cmdCaller = require('./cmdCaller.js');
 
-require('dotenv').config()
+let cmd_prefix = process.env.BOT_PREFIX;
 
-client.on('ready', () => {
-	  console.log(`Logged in as ${client.user.tag}!`);
+// Commands definition
+let commands = {};
+let cmdDef = [];
+
+//Register commands
+cmdDef.push(require('./cmds/quotes.js'));
+cmdDef.push(require('./cmds/itr.js'));
+
+// Build commands
+cmdDef.forEach((data) => {
+	commands[data.cmdName] = data.cmd;
 });
 
-client.on('message', msg => {
-	if (msg.content === '$$ping') {
-		msg.reply('Pong!');
-	} else if (msg.content === "$$pong") {
-		msg.reply('Tu comprends pas comment ça marche ping pong. 🤦‍♂️');
-	} else if (msg.content === "non mais non mais non...") {
-		const ayy = client.emojis.find(emoji => emoji.name === "vinsoif");
-		message.reply(`${ayy}`);
-	}
+process.on('unhandledRejection', (reason) => {
+	console.error(reason);
+	process.exit(1);
 });
 
-client.login(process.env.BOT_TOKEN);
+const bot = new Discord.Client();
+
+bot.on('ready', () => {
+	  console.log("Logged in as " + bot.user.tag + "!\nCurrently serving " + bot.guilds.cache.array().length + " servers.");
+	  bot.user.setPresence({
+		  activity: {
+		  	name: "On Geek Tu?"
+		  }
+	  });
+});
+
+bot.on("disconnected", () => {
+	console.log("Disconnected!");
+	process.exit(1);
+});
+
+bot.on("message", (msg) => {
+	cmdCaller(msg, bot, commands);
+});
+
+bot.login(process.env.BOT_TOKEN);
+
