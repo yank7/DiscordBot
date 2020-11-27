@@ -1,12 +1,12 @@
-let itr = {
+let play = {
     usage: "itr",
-    description: "Plays a special itr song",
+    description: "Plays a special play song",
     process: function (bot, msg, suffix) {
         if (msg.member.voice.channel) {
             const connection = msg.member.voice.channel.join();
 
             const broadcast = bot.voice.createBroadcast();
-            broadcast.play('./data/itr.wav');
+            broadcast.play('./data/play.wav');
             for (const connection of bot.voice.connections.values()) {
                 connection.play(broadcast);
             }
@@ -16,5 +16,5 @@ let itr = {
     }
 }
 
-exports.cmd = itr;
+exports.cmd = play;
 exports.cmdName = "itr"

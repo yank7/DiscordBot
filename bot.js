@@ -10,8 +10,8 @@ let commands = {};
 let cmdDef = [];
 
 // Loading all commands
-cmdDef.push(require('./cmds/quotes.js'));
-cmdDef.push(require('./cmds/itr.js'));
+cmdDef.push(require('./cmds/quotes/quotes.js'));
+cmdDef.push(require('./cmds/play/play.js'));
 
 // Register commands
 cmdDef.forEach((data) => {
