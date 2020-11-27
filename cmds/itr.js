@@ -6,7 +6,7 @@ let itr = {
             const connection = msg.member.voice.channel.join();
 
             const broadcast = bot.voice.createBroadcast();
-            broadcast.play('./Resources/itr.wav');
+            broadcast.play('./data/itr.wav');
             for (const connection of bot.voice.connections.values()) {
                 connection.play(broadcast);
             }
