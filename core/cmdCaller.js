@@ -1,6 +1,6 @@
 let cmdCaller = function (msg, bot, cmds) {
     if (msg.author.id !== bot.user.id && (msg.content.startsWith(process.env.BOT_PREFIX))) {
-        let cmdTxt = msg.content.split(/\s/)[0].substring(process.env.BOT_PREFIX.length);
+        let cmdTxt = msg.content.split(" ")[0].substring(process.env.BOT_PREFIX.length);
         let suffix = msg.content.substring(cmdTxt.length + process.env.BOT_PREFIX.length + 1);
 
         console.log("Received cmd <" + cmdTxt + "> from " + msg.author + " as command");

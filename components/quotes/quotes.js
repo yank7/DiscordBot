@@ -3,7 +3,7 @@ let quotes = {
     description: "Print a random quotes.",
     process: function(bot, msg, suffix) {
         let quotesData = require("./data/quotes.json");
-        let length = Object.keys(quotesData[0]).length;
+        let length = Object.keys(quotesData).length;
         let id = Math.floor(Math.random() * length);
         msg.channel.send({embed: {
             color: 2067276,
