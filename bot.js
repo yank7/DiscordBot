@@ -7,7 +7,8 @@ const CmdsParser = require("./core/CmdsParser")
 let cmds = new CmdsManager();
 let botClient = new DiscordJs.Client();
 
-cmds.register("quotes", require("./cmds/quotes/quotes"));
+cmds.register("quotes", require("./cmds/Quotes/Quotes"));
+cmds.register("play", require("./cmds/Play/Play"));
 
 process.on('unhandledRejection', (reason) => {
 	console.error(reason);
@@ -30,10 +31,10 @@ botClient.on("message", (msg) => {
 	let cmd = new CmdsParser(botClient, msg, process.env.BOT_PREFIX);
 
 	if (cmd.isValid()) {
-		console.log("[CMD] Received valid command <" + msg.content + "> from : " + msg.author.username + "(" + msg.author.id + ")");
+		console.log("\n[CMD] Received valid command <" + msg.content + "> from : " + msg.author.username + "(" + msg.author.id + ")");
 		cmd.parse();
 		if (cmds.doesCmdExists(cmd.name)) {
-			console.log("[CMD] Executing command <" + cmd.name + ">");
+			console.log("[CMD] Executing command <" + cmd.name + "> with [" + cmd.args.toString() + "]");
 			cmds.getCmd(cmd.name).execute(botClient, msg, cmd.args);
 		}
 	}

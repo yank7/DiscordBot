@@ -20,7 +20,13 @@ class CmdsParser {
     }
 
     parse() {
-        this.name = this.msg.content.split(" ")[0].substring(this.prefix.length);
+        let cmdArray = this.msg.content.split(" ");
+        this.name = cmdArray[0].substring(this.prefix.length);
+        cmdArray.forEach((item, index) => {
+            if (index !== 0){
+                this.args.push(item);
+            }
+        });
     }
 }
 

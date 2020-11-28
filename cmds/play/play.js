@@ -1,20 +1,24 @@
-let play = {
-    usage: "itr",
-    description: "Plays a special play song",
-    process: function (bot, msg, suffix) {
-        if (msg.member.voice.channel && suffix !== "") {
-            const connection = msg.member.voice.channel.join();
+class Play {
+    constructor() {
+        this.name = "Play";
+        this.use = "Play command usage";
+        this.desc = "Play command description";
+    }
 
-            const broadcast = bot.voice.createBroadcast();
-            broadcast.play('./data/' + suffix + '.wav');
-            for (const connection of bot.voice.connections.values()) {
-                connection.play(broadcast);
-            }
+    execute(bot, msg, args) {
+        if (msg.member.voice.channel && args[0] !== "") {
+            const voiceChannel = msg.member.voice.channel;
+
+            voiceChannel.join().then((connection) => {
+                const broadcast = connection.play('./cmds/Play/data/' + args[0] + '.wav');
+                broadcast.on("finish", () => {
+                    voiceChannel.leave();
+                });
+            });
         } else {
             msg.reply('You need to join a voice channel first!');
         }
     }
 }
 
-exports.cmd = play;
-exports.cmdName = "play"
+module.exports = Play
