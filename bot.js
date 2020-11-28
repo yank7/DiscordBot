@@ -1,48 +1,43 @@
-// External libraries
-require('dotenv').config();
-let Discord = require('discord.js');
+require("dotenv").config();
 
-// loading core functions
-let cmdCaller = require('./core/cmdCaller.js');
+const DiscordJs = require("discord.js");
+const CmdsManager = require("./core/CmdsManager");
+const CmdsParser = require("./core/CmdsParser")
 
-// Commands variable definition
-let commands = {};
-let cmdDef = [];
+let cmds = new CmdsManager();
+let botClient = new DiscordJs.Client();
 
-// Loading all commands
-cmdDef.push(require('./components/quotes/quotes'));
-cmdDef.push(require('./components/play/play'));
-
-// Register commands
-cmdDef.forEach((data) => {
-	commands[data.cmdName] = data.cmd;
-});
-
-// Starting Discord Bot
-const bot = new Discord.Client();
+cmds.register("quotes", require("./cmds/quotes/quotes"));
 
 process.on('unhandledRejection', (reason) => {
 	console.error(reason);
 	process.exit(1);
 });
 
-bot.on('ready', () => {
-	  console.log("Logged in as " + bot.user.tag + "!\nCurrently serving " + bot.guilds.cache.array().length + " servers.");
-	  bot.user.setPresence({
-		  activity: {
-		  	name: "On Geek Tu?"
-		  }
-	  });
+botClient.on("ready", () => {
+	console.info("[Boot] Logged in: " + botClient.user.tag);
+	console.info("[Boot] Now serving " + botClient.guilds.cache.array().length + " servers.");
+	botClient.user.setPresence({activity: {name: "On Geek Tu?"}});
+	console.info("[Boot] Presence set.");
 });
 
-bot.on("disconnected", () => {
-	console.log("Disconnected!");
+botClient.on("disconnected", () => {
+	console.warn("This discord bot has been disconnected");
 	process.exit(1);
 });
 
-bot.on("message", (msg) => {
-	cmdCaller(msg, bot, commands);
+botClient.on("message", (msg) => {
+	let cmd = new CmdsParser(botClient, msg, process.env.BOT_PREFIX);
+
+	if (cmd.isValid()) {
+		console.log("[CMD] Received valid command <" + msg.content + "> from : " + msg.author.username + "(" + msg.author.id + ")");
+		cmd.parse();
+		if (cmds.doesCmdExists(cmd.name)) {
+			console.log("[CMD] Executing command <" + cmd.name + ">");
+			cmds.getCmd(cmd.name).execute(botClient, msg, cmd.args);
+		}
+	}
+
 });
 
-bot.login(process.env.BOT_TOKEN);
-
+botClient.login(process.env.BOT_TOKEN);
