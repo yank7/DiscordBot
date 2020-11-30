@@ -1,3 +1,5 @@
+let Discord = require("discord.js")
+
 class Quotes {
     constructor() {
         this.name = "quotes";
@@ -10,7 +12,16 @@ class Quotes {
     }
 
     execute(bot, msg, args) {
-        this.printRandom(bot, msg);
+        if (args[0] !== undefined) {
+            if (args[0] === "all") {
+                this.printAll(bot, msg);
+            } else {
+                msg.reply("This action doesn't exist.");
+            }
+        } else {
+            this.printRandom(bot, msg);
+        }
+
     }
 
     genRandomId() {
@@ -33,6 +44,20 @@ class Quotes {
                 text: "par : " + this.data[this.randomID].author
             }
         }});
+    }
+
+    printAll(bot, msg) {
+        let message = "";
+        let embed = new Discord.MessageEmbed();
+
+        embed.setColor(2067276);
+        embed.setTitle("All quotes");
+        embed.setDescription("Listing of all the quotes");
+
+        for (let i = 0; i < this.dataLength; i++) {
+           embed.addField(this.data[i].content.trim(), "par: " + this.data[i].author.trim());
+        }
+        msg.channel.send(embed);
     }
 }
 
