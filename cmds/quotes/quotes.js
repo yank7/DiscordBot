@@ -15,7 +15,10 @@ class Quotes {
         if (args[0] !== undefined) {
             if (args[0] === "all") {
                 this.printAll(bot, msg);
-            } else {
+            } else if (args[0] === "add" && args[1] !== undefined && args[2] !== undefined) {
+
+            }
+            else {
                 msg.reply("This action doesn't exist.");
             }
         } else {
