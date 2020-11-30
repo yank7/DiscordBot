@@ -1,8 +1,8 @@
-class Play {
+class Sound {
     constructor() {
-        this.name = "Play";
-        this.use = "Play command usage";
-        this.desc = "Play command description";
+        this.name = "Sound";
+        this.use = "Sound command usage";
+        this.desc = "Sound command description";
     }
 
     execute(bot, msg, args) {
@@ -10,7 +10,7 @@ class Play {
             const voiceChannel = msg.member.voice.channel;
 
             voiceChannel.join().then((connection) => {
-                const broadcast = connection.play('./cmds/Play/data/' + args[0] + '.wav');
+                const broadcast = connection.play('./cmds/Sound/data/' + args[0] + '.wav');
                 broadcast.on("finish", () => {
                     voiceChannel.leave();
                 });
@@ -21,4 +21,4 @@ class Play {
     }
 }
 
-module.exports = Play
+module.exports = Sound

@@ -8,7 +8,7 @@ let cmds = new CmdsManager();
 let botClient = new DiscordJs.Client();
 
 cmds.register("quotes", require("./cmds/Quotes/Quotes"));
-cmds.register("play", require("./cmds/Play/Play"));
+cmds.register("play", require("./cmds/Sound/Sound"));
 
 process.on('unhandledRejection', (reason) => {
 	console.error(reason);
