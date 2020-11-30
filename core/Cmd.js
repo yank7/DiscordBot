@@ -1,4 +1,4 @@
-class CmdsParser {
+class Cmd {
     constructor(botClient, msg, prefix) {
         this.botClient = botClient;
         this.msg = msg;
@@ -34,4 +34,4 @@ class CmdsParser {
     }
 }
 
-module.exports = CmdsParser
+module.exports = Cmd

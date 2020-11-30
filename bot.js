@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const DiscordJs = require("discord.js");
 const CmdsManager = require("./core/CmdsManager");
-const CmdsParser = require("./core/CmdsParser");
+const Cmd= require("./core/Cmd");
 const ConsoleLogger = require("./core/ConsoleLogger");
 
 let cmds = new CmdsManager();
@@ -32,7 +32,7 @@ botClient.on("disconnected", () => {
 });
 
 botClient.on("message", (msg) => {
-	let cmd = new CmdsParser(botClient, msg, process.env.BOT_PREFIX);
+	let cmd = new Cmd(botClient, msg, process.env.BOT_PREFIX);
 
 	if (cmd.isValid()) {
 		clog.info("CMD", "Received valid command <"+ msg.content + "> from : " + msg.author.username + "(" + msg.author.id + ")")
