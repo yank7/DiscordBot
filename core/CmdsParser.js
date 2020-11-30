@@ -20,10 +20,14 @@ class CmdsParser {
     }
 
     parse() {
-        let cmdArray = this.msg.content.split(" ");
+        let cmdArray = this.msg.content.match(/[;a-zA-Z]+|"[\w\s]*"/gm);
         this.name = cmdArray[0].substring(this.prefix.length);
         cmdArray.forEach((item, index) => {
             if (index !== 0){
+                if (item.charAt(0) === '"' && item.charAt(item.length-1) === '"') {
+                    item = item.slice(1, -1);
+
+                }
                 this.args.push(item);
             }
         });
