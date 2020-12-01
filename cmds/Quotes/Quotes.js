@@ -1,4 +1,5 @@
 let Discord = require("discord.js")
+let fs = require("fs");
 
 class Quotes {
     constructor() {
@@ -16,7 +17,7 @@ class Quotes {
             if (args[0] === "all") {
                 this.printAll(bot, msg);
             } else if (args[0] === "add" && args[1] !== undefined && args[2] !== undefined) {
-
+                this.addQuote(args[1], args[2]);
             }
             else {
                 msg.reply("This action doesn't exist.");
@@ -24,7 +25,6 @@ class Quotes {
         } else {
             this.printRandom(bot, msg);
         }
-
     }
 
     genRandomId() {
@@ -61,6 +61,18 @@ class Quotes {
            embed.addField(this.data[i].content.trim(), "par: " + this.data[i].author.trim());
         }
         msg.channel.send(embed);
+    }
+
+    addQuote(author, content) {
+        this.data.push({
+            "author": author,
+            "content": content
+        });
+        fs.writeFile("./test.json", JSON.parse(this.data), (err) => {
+           if (err) {
+               console.log(err);
+           }
+        });
     }
 }
 
