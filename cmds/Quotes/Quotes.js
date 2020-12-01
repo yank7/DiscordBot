@@ -4,7 +4,7 @@ class Quotes {
     constructor() {
         this.name = "quotes";
         this.use = "Quotes command usage";
-        this.desc = "Quotes command description"
+        this.desc = "Quotes command description";
 
         this.data = require("./data/quotes.json");
         this.dataLength = Object.keys(this.data).length;
