@@ -83,7 +83,6 @@ class Quotes {
     }
 
     updateQuotesFile() {
-        delete require.cache[require.resolve("./data/quotes.json")];
         this.data = require("./data/quotes.json");
         this.dataLength = Object.keys(this.data).length;
     }
