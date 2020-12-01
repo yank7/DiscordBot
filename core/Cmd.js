@@ -20,7 +20,7 @@ class Cmd {
     }
 
     parse() {
-        let cmdArray = this.msg.content.match(/[;a-zA-Z]+|"[\w\s]*"/gm);
+        let cmdArray = this.msg.content.match(/[\Sa-zA-Z]+|"[\w\s]*"/gm);
         this.name = cmdArray[0].substring(this.prefix.length);
         cmdArray.forEach((item, index) => {
             if (index !== 0){
