@@ -12,8 +12,7 @@ class help {
     }
   
     execute(bot, msg, args) {
-            this.print(bot, msg);
-        }
+        this.print(bot, msg);
     }
 
     print(bot, msg) {
