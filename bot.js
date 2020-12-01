@@ -11,7 +11,7 @@ let clog = new ConsoleLogger();
 
 cmds.register("quotes", require("./cmds/Quotes/Quotes"));
 cmds.register("sound", require("./cmds/Sound/Sound"));
-cmds.register("help", require("./cmds/help));
+cmds.register("help", require("./cmds/help"));
 
 process.on('unhandledRejection', (reason) => {
 	clog.danger("unhandleRejection", reason);
