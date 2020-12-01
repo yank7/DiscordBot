@@ -1,5 +1,3 @@
-let Discord = require("help.js")
-
 class help {
     constructor() {
         this.name = "help";
