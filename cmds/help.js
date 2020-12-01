@@ -4,7 +4,7 @@ class help {
     constructor() {
         this.name = "help";
         this.use = "help command usage";
-        this.desc = "help command description"
+        this.desc = "help command description";
 
         this.data = "";
         this.dataLength = 2;
