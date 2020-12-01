@@ -18,6 +18,8 @@ class Quotes {
                 this.printAll(bot, msg);
             } else if (args[0] === "add" && args[1] !== undefined && args[2] !== undefined) {
                 this.addQuote(args[1], args[2]);
+                this.updateQuotesFile();
+                msg.reply("Quote added!");
             }
             else {
                 msg.reply("This action doesn't exist.");
@@ -51,16 +53,20 @@ class Quotes {
 
     printAll(bot, msg) {
         let message = "";
-        let embed = new Discord.MessageEmbed();
+        let messageMaxSize = 20;
+        let numberOfPost = Math.ceil(this.dataLength / messageMaxSize);
 
-        embed.setColor(2067276);
-        embed.setTitle("All quotes");
-        embed.setDescription("Listing of all the quotes");
+        for (let j = 0; j < numberOfPost; j++) {
+            let embed = new Discord.MessageEmbed();
+            embed.setColor(2067276);
+            embed.setTitle("All quotes");
+            embed.setDescription("Listing of all the quotes (" + (j+1) + "/" + numberOfPost + ")");
 
-        for (let i = 0; i < this.dataLength; i++) {
-           embed.addField(this.data[i].content.trim(), "par: " + this.data[i].author.trim());
+            for (let i = (messageMaxSize * j); i < this.dataLength; i++) {
+                embed.addField(this.data[i].content.trim(), "par: " + this.data[i].author.trim());
+            }
+            msg.channel.send(embed);
         }
-        msg.channel.send(embed);
     }
 
     addQuote(author, content) {
@@ -68,11 +74,17 @@ class Quotes {
             "author": author,
             "content": content
         });
-        fs.writeFile("./test.json", JSON.parse(this.data), (err) => {
+
+        fs.writeFile("./cmds/Quotes/data/quotes.json", JSON.stringify(this.data), (err) => {
            if (err) {
                console.log(err);
            }
         });
+    }
+
+    updateQuotesFile() {
+        this.data = require("./data/quotes.json");
+        this.dataLength = Object.keys(this.data).length;
     }
 }
 

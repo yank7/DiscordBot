@@ -20,13 +20,12 @@ class Cmd {
     }
 
     parse() {
-        let cmdArray = this.msg.content.match(/[\Sa-zA-Z]+|"[\w\s]*"/gm);
+        let cmdArray = this.msg.content.match(/"(.*?)"|[\S]+/gm);
         this.name = cmdArray[0].substring(this.prefix.length);
         cmdArray.forEach((item, index) => {
             if (index !== 0){
                 if (item.charAt(0) === '"' && item.charAt(item.length-1) === '"') {
                     item = item.slice(1, -1);
-
                 }
                 this.args.push(item);
             }
