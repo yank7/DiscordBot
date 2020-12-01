@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const DiscordJs = require("discord.js");
 const CmdsManager = require("./core/CmdsManager");
-const Cmd= require("./core/Cmd");
+const Cmd=require("./core/Cmd");
 const ConsoleLogger = require("./core/ConsoleLogger");
 
 let cmds = new CmdsManager();
