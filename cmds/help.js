@@ -3,10 +3,6 @@ class help {
         this.name = "help";
         this.use = "help command usage";
         this.desc = "help command description";
-
-        this.data = "";
-        this.dataLength = 2;
-        this.randomID = 0;
     }
   
     execute(bot, msg, args) {
